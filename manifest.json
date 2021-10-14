@@ -1,0 +1,26 @@
+{
+  "manifest_version": 1,
+  "api_version": 20191,
+  "script_runtime": { "language": "Lua", "version": "5.3" },
+
+  "key": "D27DDC6C-63CB-4F7F-8102-E720299CB007",
+  "name": "helix-core-search-asset",
+  "namespace": "Perforce",
+  "version": "20.1",
+  "version_name": "20.1 beta",
+  "description": "This extension is invoked when a file revision is tagged. Makes a curl REST call to helix-p4search index/asset endpoint.",
+
+  "compatible_products": [ "p4d" ],
+
+  "default_locale": "en",
+  "supported_locales": [ "en", "ja" ],
+
+  "developer": {
+    "name": "Perforce Software, Inc.",
+    "url": "https://www.perforce.com/"
+  },
+  "homepage_url": "https://p4-extensions.example.org/some_user_script",
+
+  "license": "example license name",
+  "license_body": "Copyright 2021, Perforce Software, Inc."
+}
