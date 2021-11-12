@@ -1,3 +1,5 @@
+![Support](https://img.shields.io/badge/Support-None-red.svg)
+
 # Helix Core Search Asset
 
 This project demonstrates how to keep the Helix Core Search service up-to-date with the latest submitted changes.  
@@ -27,7 +29,16 @@ Helix Server `super` access is required to create Server Side Extension.
 #### Credentials to access p4search
 You will need a valid `X-Auth-Token` defined in the 'p4search' configuration.
 
-## Deployment
+## Documentation
+
+Please refer to [Helix Core Search Developer Guide](https://www.perforce.com/manuals/p4search/Content/P4Search/keep-index-up-to-date.html#Use_a_Perforce_Lua_extension) to use our officially signed extension.
+
+## Support
+
+This project is an example and provided as-is.  
+Perforce offers no support for issues (either via GitHub nor via Perforce's standard support process).  All pull requests will be ignored.
+
+## Build/Usage
 
 (1) Ensure that the Helix Core Server has an extension depot. If not, create one using
 
@@ -47,17 +58,7 @@ This will create an extension skeleton named `helix-core-search-asset.p4-extensi
 
 You can skip the `--allow-unsigned` option if your server allows unsigned extensions.
 
-(4) Configure the extension's global settings and specify the `X-Auth-Token` and `ExtP4USER` values.
-
-    p4 extension --configure Perforce::helix-core-search-asset
-
-Add the `X-Auth-Token` and `P4Search asset url` in the `ExtConfig` at the end of `global-config.in` file (without altering spaces/tabs).
-
-        ExtConfig:
-        	auth_token:	00000000-0000-0000-0000-000000000000
-        	p4search_url: http://p4search.mydomain.com:1601/api/v1/asset
-
-Change the `ExtP4USER` to your extension user.
+(4) Configure the extension's global settings and change the `ExtP4USER` to match your extension user (without altering spaces/tabs).
 
 (5) Configure the extension's instance settings.
 
@@ -65,23 +66,23 @@ Change the `ExtP4USER` to your extension user.
 
 (6) For more information on Helix Server Extensions, please refer to the [Helix Core Extensions Developer Guide](https://www.perforce.com/manuals/extensions/Content/Extensions/Home-extensions.html)
 
-## Useful commands
+Here are some useful commands to work with extensions.
 
-List the extensions on a Helix Core Server.
+(1) List the extensions on a Helix Core Server.
 
     p4 extension --list --type=extensions
 
-List the extension's configurations.
+(2) List the extension's configurations.
 
     p4 extension --list --type=configs
 
-Delete the extension's directory and extension from Helix Core Server.
+(3) Delete the extension's directory and extension from Helix Core Server.
 
     rm -f helix-core-search-asset.p4-extension    
     p4 extension -y --delete Perforce::helix-core-search-asset
 
 
-## Asset trigger on windows
+## Asset trigger on Windows
 
 (1) Create a powershell script. For your convenience, here's an [example script](helix-core-search-asset.ps1).
 Make sure you change the Uri from `http://p4search.mydomain.com:1601` as per your configuration.
