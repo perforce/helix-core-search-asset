@@ -88,6 +88,7 @@ function indexAttribute(p4searchUrl, xAuthToken)
 
 	local encoded_payload = cjson.encode(t)
 	print("encoded_payload: " .. encoded_payload)
+	p4searchUrl = p4searchUrl .. "/api/v1/index/asset"
 	print("Going to call p4search: " .. p4searchUrl)
 
 	local c = curl.easy{
@@ -96,12 +97,22 @@ function indexAttribute(p4searchUrl, xAuthToken)
 		httpheader		= headers,
 		postfields		= encoded_payload,
 	}
-	local ok, err = c:perform()
+	local response = c:perform()
+	local code = c:getinfo(curl.INFO_RESPONSE_CODE)
 	c:close()
 
-	if not ok then
-		return "Error indexing attributes..."
-	else return ""
+	-- Unreachable server
+	if not response
+	then
+		print("Asset request returned error " .. tostring(code))
+		return "Unreachable server: " .. p4searchUrl
+	end
+
+	if code == 200 then
+		-- Return nothing as returning a string breaks p4java.
+		return ""
+	else
+		return "Error indexing attributes..." .. p4searchUrl
 	end
 end
 
