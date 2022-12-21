@@ -32,6 +32,13 @@ function init()
 	end
 end
 
+-- Write a log message to the extension log, along with some user data.
+function log(msg)
+	local host = Helix.Core.Server.GetVar("clientip")
+	local user = Helix.Core.Server.GetVar("user")
+	Helix.Core.Server.log({ ["user"] = user, ["host"] = host, ["msg"] = msg })
+end
+
 function GlobalConfigFields()
 	return {}
 end
@@ -104,15 +111,17 @@ function indexAttribute(p4searchUrl, xAuthToken)
 	-- Unreachable server
 	if not response
 	then
-		print("Asset request returned error " .. tostring(code))
-		return "Unreachable server: " .. p4searchUrl
+		log("Server unreachable. Asset url: " .. p4searchUrl)
+		return ""
 	end
 
 	if code == 200 then
 		-- Return nothing as returning a string breaks p4java.
+		log("Asset request sent. Asset url: " .. p4searchUrl)
 		return ""
 	else
-		return "Error indexing attributes..." .. p4searchUrl
+		log("Asset request failed. Status: " .. tostring(code) .. " Asset url: " .. p4searchUrl) 
+		return ""
 	end
 end
 
